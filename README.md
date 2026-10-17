@@ -18,14 +18,15 @@ Rscript dhs_mncah_indicators.R
 Edit `countries` and `indicators` at the top of the script to change the scope.
 
 ## Outputs
-- `data/raw/dhs_raw.csv`: raw API response
-- `data/clean/dhs_clean.csv`: cleaned data with quality flags
-- `output/qc_summary.csv`: counts of missing values, inconsistent CIs, out-of-range values, small denominators, duplicates
-- `output/mncah_trends.png`: trend plot
+Running the script creates `data/` and `output/` folders on your computer. This repository includes the two example outputs from my run, placed in the top-level folder:
+- `qc_summary.csv`: counts of missing values, inconsistent CIs, out-of-range values, small denominators, duplicates, and rows removed by the period filter
+- `mncah_trends.png`: trend plot
+
+The script also writes `data/raw/dhs_raw.csv` (raw API response) and `data/clean/dhs_clean.csv` (cleaned data with quality flags), which are not included here.
 
 ## Data quality finding
-The first run flagged 49 duplicated survey-indicator rows. Cause: DHS reports some indicators for several recall periods per survey (e.g. 2, 3 or 5 years before the survey). The script keeps one period per indicator so trends are comparable (see `period_pattern`); the number of rows removed is reported in `output/qc_summary.csv`. Older surveys that report ANC4+ only for a different period do not appear in the plot.
+The first run flagged 49 duplicated survey-indicator rows. Cause: DHS reports some indicators for several recall periods per survey (e.g. 2, 3 or 5 years before the survey). The script keeps one period per indicator so trends are comparable (see `period_pattern`); the number of rows removed is reported in `qc_summary.csv`. Older surveys that report ANC4+ only for a different period do not appear in the plot.
 
 ## Scope and limits
 Training project using aggregated survey indicators, not microdata, and not DHIS2.
-Not every requested country has a DHS survey for every indicator; the script reports what is missing.
+Not every requested country has a DHS survey for every indicator; the script reports what is missing (no data was returned for Somalia).
